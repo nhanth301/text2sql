@@ -1,0 +1,39 @@
+{
+    "address": {
+        "city": "address.city_id -> city.city_id"
+    },
+    "city": {
+        "country": "city.country_id -> country.country_id"
+    },
+    "customer": {
+        "address": "customer.address_id -> address.address_id",
+        "store": "customer.store_id -> store.store_id"
+    },
+    "film": {
+        "language": "film.language_id -> language.language_id"
+    },
+    "film_actor": {
+        "film": "film_actor.film_id -> film.film_id",
+        "actor": "film_actor.actor_id -> actor.actor_id"
+    },
+    "film_category": {
+        "category": "film_category.category_id -> category.category_id",
+        "film": "film_category.film_id -> film.film_id"
+    },
+    "inventory": {
+        "film": "inventory.film_id -> film.film_id",
+        "store": "inventory.store_id -> store.store_id"
+    },
+    "payment": {
+        "customer": "payment.customer_id -> customer.customer_id"
+    },
+    "rental": {
+        "customer": "rental.customer_id -> customer.customer_id"
+    },
+    "staff": {
+        "address": "staff.address_id -> address.address_id"
+    },
+    "store": {
+        "address": "store.address_id -> address.address_id"
+    }
+}
