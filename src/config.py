@@ -1,4 +1,7 @@
 from dataclasses import dataclass
+from dotenv import load_dotenv
+import os 
+load_dotenv()
 
 @dataclass
 class Config:
@@ -15,15 +18,21 @@ class Config:
     postgres_pass: str 
     postgres_db: str
 
+    google_api_key: str
 
-config = Config(qdrant_host='localhost',
-                qdrant_port='6333',
-                qdrant_collection='db_schema',
-                dense_vector_name='dense',
-                sparse_vector_name='sparse',
-                embedding_model_name='BAAI/bge-m3',
-                postgres_host='localhost',
-                postgres_port='5432',
-                postgres_name='postgres',
-                postgres_pass='admin',
-                postgres_db='pagila')
+
+config = Config(
+    qdrant_host=os.getenv("QDRANT_HOST"),
+    qdrant_port=os.getenv("QDRANT_PORT"),
+    qdrant_collection=os.getenv("QDRANT_COLLECTION"),
+    dense_vector_name=os.getenv("DENSE_VECTOR_NAME"),
+    sparse_vector_name=os.getenv("SPARSE_VECTOR_NAME"), 
+    embedding_model_name=os.getenv("EMBEDDING_MODEL_NAME"),
+
+    postgres_host=os.getenv("POSTGRES_HOST"),
+    postgres_port=os.getenv("POSTGRES_PORT"),
+    postgres_name=os.getenv("POSTGRES_NAME"),
+    postgres_pass=os.getenv("POSTGRES_PASS"),
+    postgres_db=os.getenv("POSTGRES_DB"),
+    google_api_key=os.getenv("GOOGLE_API_KEY"),
+)
