@@ -19,6 +19,7 @@ class Config:
     postgres_db: str
 
     google_api_key: str
+    together_api_key: str
 
 
 config = Config(
@@ -35,4 +36,5 @@ config = Config(
     postgres_pass=os.getenv("POSTGRES_PASS"),
     postgres_db=os.getenv("POSTGRES_DB"),
     google_api_key=os.getenv("GOOGLE_API_KEY"),
+    together_api_key=os.getenv("TOGETHER_API_KEY")
 )

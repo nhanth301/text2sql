@@ -2,6 +2,7 @@ from qdrant_client.http import models
 from src.vectordb.client import client
 from src.config import config
 from src.embedding.model import model
+from src.schema.output_schema import SQLTableSchema
 
 
 def create_collection():
@@ -55,7 +56,7 @@ def search(query: str, limit: int = 5,
             models.Prefetch(
                 query=query_sparse_vec, 
                 using=config.sparse_vector_name,
-                limit=prefetch_limit
+                limit=prefetch_limit 
             )
         ],
         limit=limit,
@@ -70,3 +71,19 @@ def search(query: str, limit: int = 5,
             "payload": point.payload
         })
     return results
+
+def se_search(tables: SQLTableSchema, k: int = 2) -> list[dict[str]]:
+    result = {}
+    for table in tables.create_statements:
+        search_results = search(table, limit=k, prefetch_limit=5)
+        for search_result in search_results:
+            payload = search_result['payload']
+            if payload['table'] not in result:
+                result[payload['table']] = search_result
+    return list(result.values())
+
+if __name__ == "__main__":
+    results = se_search(SQLTableSchema(create_statements=["CREATE TABLE customers (customer_id INTEGER PRIMARY KEY, first_name VARCHAR(255), last_name VARCHAR(255), email VARCHAR(255), address_id INTEGER"]))
+    for s in results:
+        print(s)
+    
