@@ -16,6 +16,12 @@ class SQLGenerationSchema(BaseModel):
                         return cleaned
             return v.replace("```", "").strip()
         return v
+    
+    def __str__(self) -> str:
+        return self.sql
+
+    def __repr__(self) -> str:
+        return self.sql
 
 class SQLValidationResult(BaseModel):
     is_valid: bool = Field(

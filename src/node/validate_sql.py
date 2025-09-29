@@ -9,7 +9,7 @@ def validate_sql_node(llm: ChatOllama | ChatGoogleGenerativeAI,
                       schema: str) -> SQLValidationResult:
     try:
         chain = VALIDATE_SQL_PROMPT | llm.with_structured_output(SQLValidationResult)
-        chain_result = chain.invoke({'question': question, 'gen_sql': sql.sql, 'schema': schema})
+        chain_result = chain.invoke({'question': question, 'gen_sql': sql, 'schema': schema})
         return chain_result
     except Exception as e:
         raise e 

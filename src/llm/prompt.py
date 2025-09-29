@@ -24,12 +24,6 @@ Validation rules:
 2. If a column or table is missing in the schema but appears in the SQL, it is invalid.
 3. The SQL must be syntactically valid PostgreSQL.
 4. The SQL must logically answer the question as best as possible with the given schema.
-
-Output format (strict JSON):
-{
-  "is_valid": true/false,
-  "errors": [list of problems found, empty if none]
-}
 """)
 
 

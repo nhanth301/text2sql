@@ -13,7 +13,7 @@ def fix_sql_node(llm: ChatOllama | ChatGoogleGenerativeAI,
         chain_result = chain.invoke({
             'question': question,
             'schema': schema,
-            'error_sql': error_sql.sql,
+            'error_sql': error_sql,
             'error': ','.join(valid.errors)
         })
         return chain_result
