@@ -9,7 +9,7 @@ QUESTION= 'List the top 5 films with the highest number of rentals in 2022'
 
 
 def test():
-    result = pseudo_sql_node(sqlcoder_llm,QUESTION)
+    result = pseudo_sql_node(gemini_llm,QUESTION)
     assert isinstance(result, SQLGenerationSchema)
     assert not result.sql.strip().startswith("```")
     assert "SELECT" in result.sql.upper()

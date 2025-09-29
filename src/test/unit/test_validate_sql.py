@@ -21,19 +21,19 @@ CREATE TABLE film_category (
 );
 """
 
-SQL = """
+SQL = SQLGenerationSchema(sql="""
 SELECT f.title, c.name
 FROM film f
 JOIN film_category fc ON f.film_id = fc.film_id
 JOIN category c ON fc.category_id = c.category_id;
-"""
+""")
 
-ERROR_SQL = """
+ERROR_SQL = SQLGenerationSchema(sql="""
 SELECT f.title, c.name
 FROM film f
 JOIN film_category fc ON f.id = fc.id
 JOIN category c ON fc.id = c.id;
-"""
+""")
 
 def test():
     #correct
