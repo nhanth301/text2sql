@@ -1,5 +1,5 @@
 from src.schema.output_schema import SQLGenerationSchema, SQLTableSchema, SQLValidationResult
-from src.node.validate_sql import validate_sql_node
+from src.component.validate_sql import validate_sql
 from src.llm.client import gemini_llm, sqlcoder_llm, mistral_llm
 
 
@@ -37,7 +37,7 @@ JOIN category c ON fc.id = c.id;
 
 def test():
     #correct
-    result = validate_sql_node(llm=gemini_llm,
+    result = validate_sql(llm=gemini_llm,
                                question=QUESTION,
                                sql=SQL,
                                schema=SCHEMA)
@@ -46,7 +46,7 @@ def test():
     assert len(result.errors) == 0
 
     #wrong
-    result = validate_sql_node(llm=gemini_llm,
+    result = validate_sql(llm=gemini_llm,
                                question=QUESTION,
                                sql=ERROR_SQL,
                                schema=SCHEMA)

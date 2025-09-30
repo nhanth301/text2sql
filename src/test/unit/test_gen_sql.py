@@ -1,6 +1,6 @@
-from src.schema.output_schema import SQLGenerationSchema, SQLTableSchema, SQLValidationResult
+from src.schema.output_schema import SQLGenerationSchema
 from src.llm.client import gemini_llm, sqlcoder_llm, mistral_llm
-from src.node.gen_sql import gen_sql_node
+from src.component.gen_sql import gen_sql
 
 QUESTION= 'Show each film with its category'
 SCHEMA = """
@@ -20,7 +20,7 @@ CREATE TABLE film_category (
 );
 """
 def test():
-    result = gen_sql_node(llm=gemini_llm,
+    result = gen_sql(llm=gemini_llm,
                           question=QUESTION,
                           schema=SCHEMA)
     assert isinstance(result, SQLGenerationSchema)

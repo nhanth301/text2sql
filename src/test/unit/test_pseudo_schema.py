@@ -1,5 +1,5 @@
-from src.node.pseudo_schema import pseudo_schema_node
-from src.schema.output_schema import SQLGenerationSchema, SQLTableSchema, SQLValidationResult
+from src.component.pseudo_schema import pseudo_schema
+from src.schema.output_schema import SQLGenerationSchema, SQLTableSchema
 from src.llm.client import gemini_llm, sqlcoder_llm, mistral_llm
 
 SQL = SQLGenerationSchema(sql="""
@@ -10,6 +10,6 @@ JOIN category c ON fc.category_id = c.category_id;
 """)
 
 def test():
-    result = pseudo_schema_node(gemini_llm, SQL)
+    result = pseudo_schema(gemini_llm, SQL)
     assert isinstance(result, SQLTableSchema)
     assert all("CREATE TABLE" in r.upper() for r in result.create_statements)

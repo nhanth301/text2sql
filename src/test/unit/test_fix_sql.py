@@ -1,6 +1,6 @@
-from src.node.fix_sql import fix_sql_node
+from src.component.fix_sql import fix_sql
 from src.llm.client import gemini_llm, sqlcoder_llm, mistral_llm
-from src.schema.output_schema import SQLGenerationSchema, SQLTableSchema, SQLValidationResult
+from src.schema.output_schema import SQLGenerationSchema, SQLValidationResult
 
 VALIDATION = SQLValidationResult(
     is_valid=False,
@@ -30,15 +30,15 @@ CREATE TABLE film_category (
 );
 """
 
-ERROR_SQL = """
+ERROR_SQL = SQLGenerationSchema(sql="""
 SELECT f.title, c.name
 FROM film f
 JOIN film_category fc ON f.id = fc.id
 JOIN category c ON fc.id = c.id;
-"""
+""")
 
 def test():
-    result = fix_sql_node(llm=gemini_llm,
+    result = fix_sql(llm=gemini_llm,
                           valid=VALIDATION,
                           question=QUESTION,
                           schema=SCHEMA,
