@@ -1,4 +1,5 @@
 from src.schema.output_schema import SQLTableSchema
+from typing import Any
 
 relationships = {
     "address": {
@@ -40,7 +41,7 @@ relationships = {
     }
 }
 
-def get_schema_prompt(schema_results: list[dict]) -> str:
+def get_schema_prompt(schema_results: list[dict[str,Any]]) -> str:
     blocks = []
     included_tables = {result["payload"]["table"] for result in schema_results}
 

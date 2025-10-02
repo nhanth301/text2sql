@@ -47,3 +47,13 @@ class QueryResponse(BaseModel):
     error: Optional[str] = Field(
         None, description="Error message if the query failed."
     )
+
+class IntentSchema(BaseModel):
+    intent: Optional[str] = Field(
+        None,
+        description="The natural language query inferred from the conversation, or None if not enough information"
+    )
+    clarification: Optional[str] = Field(
+        None,
+        description="A question to ask the user if the intent is unclear or incomplete"
+    )

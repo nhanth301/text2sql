@@ -7,7 +7,7 @@ def fix_sql(llm: ChatOllama | ChatGoogleGenerativeAI,
                  valid: SQLValidationResult,
                  question: str,
                  schema: str,
-                 error_sql: SQLGenerationSchema):
+                 error_sql: SQLGenerationSchema) -> SQLGenerationSchema:
     try:
         chain = FIX_SQL_PROMPT | llm.with_structured_output(SQLGenerationSchema)
         chain_result = chain.invoke({

@@ -5,7 +5,7 @@ from sqlalchemy.exc import SQLAlchemyError
 
 def query(sql_query: SQLGenerationSchema, return_dict: bool = False) -> QueryResponse | dict :
     try:
-        result = pd.read_sql(sql_query, engine)
+        result = pd.read_sql(sql_query.sql, engine)
         if return_dict:
             result = result.to_dict()
         return QueryResponse(result=result, error=None)

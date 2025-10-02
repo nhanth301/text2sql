@@ -72,10 +72,11 @@ def search(query: str, limit: int = 5,
         })
     return results
 
-def se_search(tables: SQLTableSchema, k: int = 2) -> list[dict[str]]:
+def se_search(question: str, tables: SQLTableSchema, k: int = 2) -> list[dict[str]]:
     result = {}
     for table in tables.create_statements:
-        search_results = search(table, limit=k, prefetch_limit=5)
+        query = question + " " + table
+        search_results = search(query, limit=k, prefetch_limit=10)
         for search_result in search_results:
             payload = search_result['payload']
             if payload['table'] not in result:

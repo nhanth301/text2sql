@@ -1,12 +1,19 @@
 from langchain.prompts import ChatPromptTemplate
 
-SQL_GEN_PROMPT = ChatPromptTemplate.from_template(
-    "You are a Text-to-SQL generator. "
-    "The user will provide a natural language question and a database schema. "
-    "Your task is to output ONLY the SQL query that correctly answers the question, "
-    "using valid PostgreSQL syntax. "
-    "Output must be the raw SQL query only.\n\n"
-    "Schema:\n{schema}\n\nQuestion: {question}"
+SQL_GEN_PROMPT = ChatPromptTemplate.from_template("""
+    You are a world-class SQL expert.
+Based on the user's question and the provided database schema, write a SINGLE, correct, and efficient SQL query to answer the question.
+Pay close attention to the tables and columns in the schema. Ensure you join all necessary tables.
+
+**User's Question:**
+{question}
+
+**Database Schema:**
+---
+{schema}
+---
+Provide only the SQL query.
+"""
 )
 
 VALIDATE_SQL_PROMPT = ChatPromptTemplate.from_template("""
@@ -91,3 +98,54 @@ Error:
 
 Corrected SQL:
 """)
+
+
+INTENT_PROMPT = ChatPromptTemplate.from_template("""
+You are a **database assistant** that helps users transform their natural language requests into SQL intents.
+
+---
+Guidelines:
+- Always return output in strict JSON format: {{"intent": string | null, "clarification": string | null}}.
+- If the user greets or makes small talk, introduce yourself and explain briefly that you can help them query the database in natural language.
+- When the user makes a request, extract a **clear, precise intent** suitable for forming a SQL query.
+  - Include both the main entity (e.g., customers, orders, products) and the requested action/info (e.g., list, count, details, average).
+- Rewrite vague or informal phrasing into something precise for querying.
+- If the user only names an entity but not what info they want, set `"intent": null` and ask a clarification in `"clarification"`.
+- If the request is unrelated to databases/SQL, set `"intent": null` and `"clarification": "Sorry, I can only help with database-related questions."`.
+- If there is a previous SQL result in the conversation history (shown as [SQL_RESULT]: ...), **use it as context** for refining the intent.
+  - Example: if the SQL result shows `customer_id=148` and the user then asks "with their name and location", the intent should be 
+    `"Get the name and location of customer with id=148"`.
+
+---
+Examples:
+
+User: How many customers do we have?
+Assistant: {{
+  "intent": "Count the number of customers",
+  "clarification": null
+}}
+
+User: Show me the thing about money
+Assistant: {{
+  "intent": null,
+  "clarification": "Could you clarify what you mean by 'thing about money'? For example, are you asking about total sales, revenue, or product prices?"
+}}
+
+User: What is LangGraph?
+Assistant: {{
+  "intent": null,
+  "clarification": "Sorry, I can only help with database-related questions."
+}}
+
+---
+Conversation history:
+{history}
+
+Assistant:
+""")
+
+
+
+
+
+

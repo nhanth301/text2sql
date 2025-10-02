@@ -16,19 +16,27 @@ os.environ["GOOGLE_API_KEY"] = config.google_api_key
 
 # print(llm.invoke("hello"))
 gemini_llm = ChatGoogleGenerativeAI(
-    model="gemini-2.0-flash",
+    model="gemini-2.0-flash-lite",
     temperature=0,
     max_output_tokens=None,
     timeout=None,
     max_retries=2,
 )
 
-sqlcoder_llm = ChatOllama(
-    model="sqlcoder:7b",
-    temperature=0,
+creative_gemini_llm = ChatGoogleGenerativeAI(
+    model="gemini-2.0-flash-lite",
+    temperature=1.2,
+    max_output_tokens=None,
+    timeout=None,
+    max_retries=2,
 )
 
-mistral_llm = ChatOllama(
-    model="mistral:7b",
-    temperature=0
-)
+# sqlcoder_llm = ChatOllama(
+#     model="sqlcoder:7b",
+#     temperature=0,
+# )
+
+# mistral_llm = ChatOllama(
+#     model="mistral:7b",
+#     temperature=0
+# )
