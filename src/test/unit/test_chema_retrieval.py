@@ -9,4 +9,3 @@ def test():
         print(r['payload']['ddl'])
     assert isinstance(result[0],list)
     assert isinstance(result[1],str)
-test()

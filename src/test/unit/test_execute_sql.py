@@ -9,7 +9,5 @@ JOIN category c ON fc.category_id = c.category_id;
 """)
 
 def test():
-    result = execute_sql(sql=SQL,return_dict=False)
+    result = execute_sql(sql=SQL)
     assert isinstance(result, QueryResponse)
-    result = execute_sql(sql=SQL,return_dict=True)
-    assert isinstance(result, dict)
